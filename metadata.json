@@ -1,0 +1,6 @@
+{
+  "name": "IntervAI",
+  "description": "AI-powered interview preparation platform. Practice interviews with Gemini, get real-time feedback, and track your progress.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": []
+}

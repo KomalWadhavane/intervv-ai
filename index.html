@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Google AI Studio App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="error-display" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#1a1a1a; color:#ff4d4d; padding:20px; font-family:monospace; z-index:9999; overflow:auto;">
+      <h2 style="color:#fff">⚠️ Application Error</h2>
+      <p>The app failed to load. This is usually due to a missing setting or a local browser error.</p>
+      <hr style="border:1px solid #333">
+      <pre id="error-message" style="white-space:pre-wrap; background:#000; padding:15px; border-radius:8px;"></pre>
+      <p style="color:#888; margin-top:20px;">Try these steps:</p>
+      <ul style="color:#ccc">
+        <li>Check if your <b>.env</b> file exists and has the API keys.</li>
+        <li>Run <b>npm install</b> in your terminal.</li>
+        <li>Restart the server (Ctrl+C then npm run dev).</li>
+      </ul>
+    </div>
+    <script>
+      // Polyfill for process
+      window.process = { env: { NODE_ENV: 'development' } };
+      
+      // Error listener to catch and show errors on the white screen
+      window.addEventListener('error', function(event) {
+        const display = document.getElementById('error-display');
+        const message = document.getElementById('error-message');
+        if (display && message) {
+          display.style.display = 'block';
+          message.textContent = event.error ? (event.error.stack || event.error) : event.message;
+        }
+      });
+
+      // Catch unhandled promise rejections (like failed API calls)
+      window.addEventListener('unhandledrejection', function(event) {
+        const display = document.getElementById('error-display');
+        const message = document.getElementById('error-message');
+        if (display && message) {
+          display.style.display = 'block';
+          message.textContent = 'Unhandled Rejection: ' + event.reason;
+        }
+      });
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
